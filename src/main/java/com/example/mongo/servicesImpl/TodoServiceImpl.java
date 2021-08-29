@@ -12,17 +12,20 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TodoServiceImpl implements TodoService{
 
+  @Autowired
+  ObjectMapper mapper;
+
   @Override
-  public Todo getProduct(int id) {
+  public Todo getUserTodo(int id) {
 
     HttpClient client = HttpClientBuilder.create().build();
-    ObjectMapper mapper = new ObjectMapper();
-    
+
     try {
       HttpResponse res = client.execute(new HttpGet("https://jsonplaceholder.typicode.com/todos/"+id));
       int statusCode = res.getStatusLine().getStatusCode();
@@ -32,7 +35,7 @@ public class TodoServiceImpl implements TodoService{
         System.out.println(body);
 
         return mapper.readValue(body, Todo.class);
-      }
+      } 
     } catch (IOException e) {
       e.printStackTrace();
     }
