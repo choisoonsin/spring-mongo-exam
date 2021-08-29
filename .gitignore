@@ -37,6 +37,3 @@ out/
 .vscode/
 
 /bin/
-/.gradle/
-/gradle/
-gradle*
